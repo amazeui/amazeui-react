@@ -47,6 +47,11 @@ var Modal = React.createClass({
     this.setState({
       transitioning: true
     });
+
+    //TODO 应考虑给大部分组件加入onMount, onUnMount等事件. 以mixin的方式?
+    if(this.props.onMount){
+      this.props.onMount();
+    }
   },
 
   componentWillUnmount: function() {

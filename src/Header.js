@@ -14,7 +14,10 @@ var Header = React.createClass({
     data: React.PropTypes.object,
     fixed: React.PropTypes.bool,
     title: React.PropTypes.node,
-    link: React.PropTypes.string
+    link: React.PropTypes.string,
+    //不使用link时, 可指定handler事件处理及对应scope
+    handler: React.PropTypes.func,
+    scope: React.PropTypes.object
   },
 
   getDefaultProps: function() {
@@ -25,24 +28,45 @@ var Header = React.createClass({
   },
 
   renderTitle: function() {
-    return this.props.title ? (
-      <h1 className={this.prefixClass('title')}>
-        {this.props.link ? (
-          <a
-            href={this.props.link}>
-            {this.props.title}
+    let me = this;
+    if(me.props.title){
+      let linkStr = me.props.title;
+      if(me.props.link){
+        linkStr = (
+          <a href={me.props.link}>
+            {me.props.title}
           </a>
-        ) : this.props.title}
-      </h1>
-    ) : null;
+        )
+      }
+      else if(me.props.handler){
+        linkStr = (
+          <a onClick={me.props.handler.bind(me.props.scope)}>
+            {me.props.title}
+          </a>
+        )
+      }
+      return (
+        <h1 className={me.prefixClass('title')}>
+          {linkStr}
+        </h1>
+      )
+    }
+    else{
+      return null;
+    }
   },
 
   renderNav: function(position) {
     var data = this.props.data;
     var renderItem = function(item, i) {
       return (
-        <a href={item.link}
-           key={'headerNavItem' + i}>
+          {item.link ? (
+            <a href={item.link}
+               key={'headerNavItem' + i}>
+          ) : (
+            <a onClick={item.handler.bind(item.scope)}
+               key={'headerNavItem' + i}>)}
+
           {item.title ? (
             <span className={this.prefixClass('nav-title')}>
               {item.title}
