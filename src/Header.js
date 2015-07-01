@@ -28,9 +28,9 @@ var Header = React.createClass({
   },
 
   renderTitle: function() {
-    let me = this;
+    var me = this;
     if(me.props.title){
-      let linkStr = me.props.title;
+      var linkStr = me.props.title;
       if(me.props.link){
         linkStr = (
           <a href={me.props.link}>
@@ -65,7 +65,8 @@ var Header = React.createClass({
                key={'headerNavItem' + i}>
           ) : (
             <a onClick={item.handler.bind(item.scope)}
-               key={'headerNavItem' + i}>)}
+               key={'headerNavItem' + i}>
+          )}
 
           {item.title ? (
             <span className={this.prefixClass('nav-title')}>
