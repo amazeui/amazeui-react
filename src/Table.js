@@ -4,7 +4,7 @@ var React = require('react');
 var classNames = require('classnames');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Button = React.createClass({
+var Table = React.createClass({
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -52,4 +52,4 @@ var Button = React.createClass({
   }
 });
 
-module.exports = Button;
+module.exports = Table;
