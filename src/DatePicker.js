@@ -12,6 +12,8 @@ var DatePicker = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func,
+    onSubtractMonth: React.PropTypes.func,
+    onAddMonth: React.PropTypes.func,
     viewMode: React.PropTypes.string,
     minViewMode: React.PropTypes.string,
     daysOfWeekDisabled: React.PropTypes.array,
@@ -86,6 +88,8 @@ var DatePicker = React.createClass({
     this.setState({
       viewDate: newDate
     });
+    const { onSubtractMonth } = this.props;
+    onSubtractMonth && onSubtractMonth(newDate);
   },
 
   addMonth: function() {
@@ -96,6 +100,8 @@ var DatePicker = React.createClass({
     this.setState({
       viewDate: newDate
     });
+    const { onAddMonth } = this.props;
+    onAddMonth && onAddMonth(newDate);
   },
 
   setSelectedDate: function(event) {
