@@ -12,6 +12,7 @@ var DatePicker = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func,
+    getWidget: React.PropTypes.func,
     onSubtractMonth: React.PropTypes.func,
     onAddMonth: React.PropTypes.func,
     viewMode: React.PropTypes.string,
@@ -330,7 +331,7 @@ var DaysPicker = React.createClass({
     };
   },
 
-  renderDays: function() {
+  renderDays: function(getWidget = () => {}) {
     var row;
     var i;
     var _ref;
@@ -409,6 +410,11 @@ var DaysPicker = React.createClass({
           className={classNames(classes)}
           onClick={this.props.setSelectedDate}>
           {prevMonth.getDate()}
+          {getWidget({
+            year: d.getFullYear(),
+            month: prevMonth.getMonth(),
+            date: prevMonth.getDate()
+          })}
         </td>
       );
 
@@ -448,9 +454,8 @@ var DaysPicker = React.createClass({
   },
 
   render: function() {
-    var viewDate = this.props.viewDate;
     var prefixClass = this.prefixClass;
-    var locale = this.props.locale;
+    var { viewDate, locale, getWidget } = this.props;
 
     return (
       <div
@@ -478,7 +483,7 @@ var DaysPicker = React.createClass({
           {this.renderWeek()}
           </thead>
           <tbody>
-          {this.renderDays()}
+          {this.renderDays(getWidget)}
           </tbody>
         </table>
       </div>
