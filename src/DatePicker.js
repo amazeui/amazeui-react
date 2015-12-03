@@ -287,12 +287,13 @@ var DatePicker = React.createClass({
         addMonth={this.addMonth}
         setSelectedDate={this.setSelectedDate}
         showMonths={this.showMonths}
+        getWidget={this.props.getWidget}
 
         weekStart={this.props.weekStart}
         daysOfWeekDisabled={this.props.daysOfWeekDisabled}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
-        />
+      />
     );
   },
 
@@ -364,7 +365,7 @@ var DaysPicker = React.createClass({
     };
   },
 
-  renderDays: function(getWidget = () => {}) {
+  renderDays: function(getWidget = ({year, month, date}) => date) {
     var row;
     var i;
     var _ref;
@@ -421,11 +422,11 @@ var DaysPicker = React.createClass({
 
       // set className disabled
       if ((minDate && prevMonth.valueOf() < minDate)
-          || (maxDate && prevMonth.valueOf() > maxDate)) {
+        || (maxDate && prevMonth.valueOf() > maxDate)) {
         classes[this.setClassNamespace('disabled')] = true;
       }
 
-       // week disabled
+      // week disabled
       if (this.props.daysOfWeekDisabled) {
         _ref = this.props.daysOfWeekDisabled;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -442,7 +443,6 @@ var DaysPicker = React.createClass({
           key={prevMonth.getMonth() + '-' + prevMonth.getDate()}
           className={classNames(classes)}
           onClick={this.props.setSelectedDate}>
-          {prevMonth.getDate()}
           {getWidget({
             year: d.getFullYear(),
             month: prevMonth.getMonth(),
@@ -485,7 +485,7 @@ var DaysPicker = React.createClass({
       </tr>
     );
   },
-  componentWillReceiveProps: nextProps => {
+  componentWillReceiveProps: function(nextProps) {
     const { prevLoading, nextLoading } = nextProps;
     this.setState({
       prevLoading,
@@ -506,9 +506,9 @@ var DaysPicker = React.createClass({
             <th className={prefixClass('prev')} onClick={this.props.subtractMonth}>
               {
                 this.state.prevLoading ?
-                <Icon spin icon="circle-o-notch" />
+                  <Icon spin icon="circle-o-notch" />
                   :
-                <i className={prefixClass('prev-icon')}></i>
+                  <i className={prefixClass('prev-icon')}></i>
               }
             </th>
             <th

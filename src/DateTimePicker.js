@@ -120,18 +120,8 @@ var DateTimePicker = React.createClass({
       return (
         <DatePicker
           onSelect={this.handleSelect}
-          onClose={this.props.onClose}
-          onSubtractMonth={this.props.onSubtractMonth}
-          onAddMonth={this.props.onAddMonth}
-          weekStart={this.props.weekStart}
-          viewMode={this.props.viewMode}
-          minViewMode={this.props.minViewMode}
-          daysOfWeekDisabled={this.props.daysOfWeekDisabled}
-          format={this.props.format}
           date={this.state.date}
-          locale={this.props.locale}
-          minDate={this.props.minDate}
-          maxDate={this.props.maxDate} />
+          {...this.props} />
       );
     }
   },
