@@ -73,8 +73,6 @@ var DatePicker = React.createClass({
     }
 
     return {
-      prevLoading: false,
-      nextLoading: false,
       locale: dateUtils.getLocale(this.props.locale),
       viewDate: this.props.date,
       selectedDate: this.props.date,
@@ -283,16 +281,13 @@ var DatePicker = React.createClass({
   renderDays: function() {
     return (
       <DaysPicker
-        style={this.state.displayed.days}
-        selectedDate={this.state.selectedDate}
-        viewDate={this.state.viewDate}
+        {...this.state}
 
         subtractMonth={this.subtractMonth}
         addMonth={this.addMonth}
         setSelectedDate={this.setSelectedDate}
         showMonths={this.showMonths}
 
-        locale={this.state.locale}
         weekStart={this.props.weekStart}
         daysOfWeekDisabled={this.props.daysOfWeekDisabled}
         minDate={this.props.minDate}
@@ -341,23 +336,28 @@ var DatePicker = React.createClass({
 var DaysPicker = React.createClass({
   mixins: [ClassNameMixin],
 
-  propTypes: {
-    subtractMonth: React.PropTypes.func.isRequired,
-    addMonth: React.PropTypes.func.isRequired,
-
-    setSelectedDate: React.PropTypes.func.isRequired,
-    selectedDate: React.PropTypes.object.isRequired,
-
-    viewDate: React.PropTypes.object.isRequired,
-    showMonths: React.PropTypes.func.isRequired,
-
-    locale: React.PropTypes.object,
-    weekStart: React.PropTypes.number,
-    daysOfWeekDisabled: React.PropTypes.array,
-    minDate: React.PropTypes.string,
-    maxDate: React.PropTypes.string
+  //propTypes: {
+  //  subtractMonth: React.PropTypes.func.isRequired,
+  //  addMonth: React.PropTypes.func.isRequired,
+  //
+  //  setSelectedDate: React.PropTypes.func.isRequired,
+  //  selectedDate: React.PropTypes.object.isRequired,
+  //
+  //  viewDate: React.PropTypes.object.isRequired,
+  //  showMonths: React.PropTypes.func.isRequired,
+  //
+  //  locale: React.PropTypes.object,
+  //  weekStart: React.PropTypes.number,
+  //  daysOfWeekDisabled: React.PropTypes.array,
+  //  minDate: React.PropTypes.string,
+  //  maxDate: React.PropTypes.string
+  //},
+  getInitialState: function() {
+    return {
+      prevLoading: this.props.prevLoading,
+      nextLoading: this.props.nextLoading
+    };
   },
-
   getDefaultProps: function() {
     return {
       classPrefix: 'datepicker'
@@ -485,7 +485,13 @@ var DaysPicker = React.createClass({
       </tr>
     );
   },
-
+  componentWillReceiveProps: nextProps => {
+    const { prevLoading, nextLoading } = nextProps;
+    this.setState({
+      prevLoading,
+      nextLoading
+    })
+  },
   render: function() {
     var prefixClass = this.prefixClass;
     var { viewDate, locale, getWidget } = this.props;
@@ -493,7 +499,7 @@ var DaysPicker = React.createClass({
     return (
       <div
         className={prefixClass('days')}
-        style={this.props.style}>
+        style={this.props.displayed.days}>
         <table className={prefixClass('table')}>
           <thead>
           <tr className={prefixClass('header')}>
