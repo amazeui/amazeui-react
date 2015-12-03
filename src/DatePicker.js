@@ -5,6 +5,7 @@ var classNames = require('classnames');
 var fecha = require('fecha');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 var dateUtils = require('./utils/dateUtils');
+var Icon = require('./Icon');
 
 var DatePicker = React.createClass({
   mixins: [ClassNameMixin],
@@ -72,6 +73,8 @@ var DatePicker = React.createClass({
     }
 
     return {
+      prevLoading: false,
+      nextLoading: false,
       locale: dateUtils.getLocale(this.props.locale),
       viewDate: this.props.date,
       selectedDate: this.props.date,
@@ -82,27 +85,57 @@ var DatePicker = React.createClass({
   // DaysPicker props function
 
   subtractMonth: function() {
-    var viewDate = this.state.viewDate;
+    const { prevLoading, viewDate } = this.state;
+    if(prevLoading){
+      return;
+    }
     var newDate = new Date(viewDate.valueOf());
 
     newDate.setMonth(viewDate.getMonth() - 1);
-    this.setState({
-      viewDate: newDate
-    });
     const { onSubtractMonth } = this.props;
-    onSubtractMonth && onSubtractMonth(newDate);
+    if(onSubtractMonth) {
+      this.setState({
+        prevLoading: true
+      });
+      onSubtractMonth(newDate, () => {
+        this.setState({
+          viewDate: newDate,
+          prevLoading: false
+        });
+      });
+    }
+    else{
+      this.setState({
+        viewDate: newDate
+      });
+    }
   },
 
   addMonth: function() {
-    var viewDate = this.state.viewDate;
+    const { nextLoadingIcon, viewDate } = this.state;
+    if(nextLoadingIcon){
+      return;
+    }
     var newDate = new Date(viewDate.valueOf());
 
     newDate.setMonth(viewDate.getMonth() + 1);
-    this.setState({
-      viewDate: newDate
-    });
     const { onAddMonth } = this.props;
-    onAddMonth && onAddMonth(newDate);
+    if(onAddMonth) {
+      this.setState({
+        nextLoading: true
+      });
+      onAddMonth(newDate, () => {
+        this.setState({
+          viewDate: newDate,
+          nextLoading: false
+        });
+      });
+    }
+    else{
+      this.setState({
+        viewDate: newDate
+      });
+    }
   },
 
   setSelectedDate: function(event) {
@@ -465,7 +498,12 @@ var DaysPicker = React.createClass({
           <thead>
           <tr className={prefixClass('header')}>
             <th className={prefixClass('prev')} onClick={this.props.subtractMonth}>
-              <i className={prefixClass('prev-icon')}></i>
+              {
+                this.state.prevLoading ?
+                <Icon spin icon="circle-o-notch" />
+                  :
+                <i className={prefixClass('prev-icon')}></i>
+              }
             </th>
             <th
               className={prefixClass('switch')}
@@ -477,7 +515,12 @@ var DaysPicker = React.createClass({
               </div>
             </th>
             <th className={prefixClass('next')} onClick={this.props.addMonth}>
-              <i className={prefixClass('next-icon')}></i>
+              {
+                this.state.nextLoading ?
+                  <Icon spin icon="circle-o-notch" />
+                  :
+                  <i className={prefixClass('next-icon')}></i>
+              }
             </th>
           </tr>
           {this.renderWeek()}
