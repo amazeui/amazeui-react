@@ -136,20 +136,21 @@ var DatePicker = React.createClass({
     }
   },
 
-  setSelectedDate: function(event) {
-    if (/disabled/ig.test(event.target.className)) {
+  setSelectedDate: function(params) {
+    const { className, date } = params;
+    if (/disabled|new|old/ig.test(className)) {
       return;
     }
 
     var viewDate = this.state.viewDate;
 
-    if (/new/ig.test(event.target.className)) {
-      viewDate.setMonth(viewDate.getMonth() + 1);
-    } else if (/old/ig.test(event.target.className)) {
-      viewDate.setMonth(viewDate.getMonth() - 1);
-    }
+    //if (/new/ig.test(className)) {
+    //  viewDate.setMonth(viewDate.getMonth() + 1);
+    //} else if (/old/ig.test(className)) {
+    //  viewDate.setMonth(viewDate.getMonth() - 1);
+    //}
 
-    viewDate.setDate(event.target.innerHTML);
+    viewDate.setDate(date);
 
     this.setViewDate(viewDate);
   },
@@ -437,16 +438,20 @@ var DaysPicker = React.createClass({
           }
         }
       }
-
+      let date = prevMonth.getDate();
+      let className = classNames(classes);
       cells.push(
         <td
-          key={prevMonth.getMonth() + '-' + prevMonth.getDate()}
-          className={classNames(classes)}
-          onClick={this.props.setSelectedDate}>
+          key={prevMonth.getMonth() + '-' + date}
+          className={className}
+          onClick={() => this.props.setSelectedDate({
+            className,
+            date
+          })}>
           {getWidget({
             year: d.getFullYear(),
             month: prevMonth.getMonth(),
-            date: prevMonth.getDate()
+            date
           })}
         </td>
       );
