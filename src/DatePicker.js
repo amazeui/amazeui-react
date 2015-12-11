@@ -5,6 +5,7 @@ var classNames = require('classnames');
 var fecha = require('fecha');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 var dateUtils = require('./utils/dateUtils');
+var Icon = require('./Icon');
 
 var DatePicker = React.createClass({
   mixins: [ClassNameMixin],
@@ -12,6 +13,9 @@ var DatePicker = React.createClass({
   propTypes: {
     onSelect: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func,
+    getWidget: React.PropTypes.func,
+    onSubtractMonth: React.PropTypes.func,
+    onAddMonth: React.PropTypes.func,
     viewMode: React.PropTypes.string,
     minViewMode: React.PropTypes.string,
     daysOfWeekDisabled: React.PropTypes.array,
@@ -79,39 +83,74 @@ var DatePicker = React.createClass({
   // DaysPicker props function
 
   subtractMonth: function() {
-    var viewDate = this.state.viewDate;
+    const { prevLoading, viewDate } = this.state;
+    if(prevLoading){
+      return;
+    }
     var newDate = new Date(viewDate.valueOf());
 
     newDate.setMonth(viewDate.getMonth() - 1);
-    this.setState({
-      viewDate: newDate
-    });
+    const { onSubtractMonth } = this.props;
+    if(onSubtractMonth) {
+      this.setState({
+        prevLoading: true
+      });
+      onSubtractMonth(newDate, () => {
+        this.setState({
+          viewDate: newDate,
+          prevLoading: false
+        });
+      });
+    }
+    else{
+      this.setState({
+        viewDate: newDate
+      });
+    }
   },
 
   addMonth: function() {
-    var viewDate = this.state.viewDate;
+    const { nextLoadingIcon, viewDate } = this.state;
+    if(nextLoadingIcon){
+      return;
+    }
     var newDate = new Date(viewDate.valueOf());
 
     newDate.setMonth(viewDate.getMonth() + 1);
-    this.setState({
-      viewDate: newDate
-    });
+    const { onAddMonth } = this.props;
+    if(onAddMonth) {
+      this.setState({
+        nextLoading: true
+      });
+      onAddMonth(newDate, () => {
+        this.setState({
+          viewDate: newDate,
+          nextLoading: false
+        });
+      });
+    }
+    else{
+      this.setState({
+        viewDate: newDate
+      });
+    }
   },
 
-  setSelectedDate: function(event) {
-    if (/disabled/ig.test(event.target.className)) {
+  setSelectedDate: function(params) {
+    const { className, date } = params;
+    if (/disabled|new|old/ig.test(className)) {
       return;
     }
 
     var viewDate = this.state.viewDate;
 
-    if (/new/ig.test(event.target.className)) {
-      viewDate.setMonth(viewDate.getMonth() + 1);
-    } else if (/old/ig.test(event.target.className)) {
-      viewDate.setMonth(viewDate.getMonth() - 1);
-    }
+    //if (/new/ig.test(className)) {
+    //  viewDate.setMonth(viewDate.getMonth() + 1);
+    //} else if (/old/ig.test(className)) {
+    //  viewDate.setMonth(viewDate.getMonth() - 1);
+    //}
 
-    viewDate.setDate(event.target.innerHTML);
+    viewDate.setDate(date);
 
     this.setViewDate(viewDate);
   },
@@ -243,21 +282,19 @@ var DatePicker = React.createClass({
   renderDays: function() {
     return (
       <DaysPicker
-        style={this.state.displayed.days}
-        selectedDate={this.state.selectedDate}
-        viewDate={this.state.viewDate}
+        {...this.state}
 
         subtractMonth={this.subtractMonth}
         addMonth={this.addMonth}
         setSelectedDate={this.setSelectedDate}
         showMonths={this.showMonths}
+        getWidget={this.props.getWidget}
 
-        locale={this.state.locale}
         weekStart={this.props.weekStart}
         daysOfWeekDisabled={this.props.daysOfWeekDisabled}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
-        />
+      />
     );
   },
 
@@ -301,30 +338,35 @@ var DatePicker = React.createClass({
 var DaysPicker = React.createClass({
   mixins: [ClassNameMixin],
 
-  propTypes: {
-    subtractMonth: React.PropTypes.func.isRequired,
-    addMonth: React.PropTypes.func.isRequired,
-
-    setSelectedDate: React.PropTypes.func.isRequired,
-    selectedDate: React.PropTypes.object.isRequired,
-
-    viewDate: React.PropTypes.object.isRequired,
-    showMonths: React.PropTypes.func.isRequired,
-
-    locale: React.PropTypes.object,
-    weekStart: React.PropTypes.number,
-    daysOfWeekDisabled: React.PropTypes.array,
-    minDate: React.PropTypes.string,
-    maxDate: React.PropTypes.string
+  //propTypes: {
+  //  subtractMonth: React.PropTypes.func.isRequired,
+  //  addMonth: React.PropTypes.func.isRequired,
+  //
+  //  setSelectedDate: React.PropTypes.func.isRequired,
+  //  selectedDate: React.PropTypes.object.isRequired,
+  //
+  //  viewDate: React.PropTypes.object.isRequired,
+  //  showMonths: React.PropTypes.func.isRequired,
+  //
+  //  locale: React.PropTypes.object,
+  //  weekStart: React.PropTypes.number,
+  //  daysOfWeekDisabled: React.PropTypes.array,
+  //  minDate: React.PropTypes.string,
+  //  maxDate: React.PropTypes.string
+  //},
+  getInitialState: function() {
+    return {
+      prevLoading: this.props.prevLoading,
+      nextLoading: this.props.nextLoading
+    };
   },
-
   getDefaultProps: function() {
     return {
       classPrefix: 'datepicker'
     };
   },
 
-  renderDays: function() {
+  renderDays: function(getWidget = ({year, month, date}) => date) {
     var row;
     var i;
     var _ref;
@@ -381,11 +423,11 @@ var DaysPicker = React.createClass({
 
       // set className disabled
       if ((minDate && prevMonth.valueOf() < minDate)
-          || (maxDate && prevMonth.valueOf() > maxDate)) {
+        || (maxDate && prevMonth.valueOf() > maxDate)) {
         classes[this.setClassNamespace('disabled')] = true;
       }
 
-       // week disabled
+      // week disabled
       if (this.props.daysOfWeekDisabled) {
         _ref = this.props.daysOfWeekDisabled;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -396,13 +438,21 @@ var DaysPicker = React.createClass({
           }
         }
       }
-
+      let date = prevMonth.getDate();
+      let className = classNames(classes);
       cells.push(
         <td
-          key={prevMonth.getMonth() + '-' + prevMonth.getDate()}
-          className={classNames(classes)}
-          onClick={this.props.setSelectedDate}>
-          {prevMonth.getDate()}
+          key={prevMonth.getMonth() + '-' + date}
+          className={className}
+          onClick={() => this.props.setSelectedDate({
+            className,
+            date
+          })}>
+          {getWidget({
+            year: d.getFullYear(),
+            month: prevMonth.getMonth(),
+            date
+          })}
         </td>
       );
 
@@ -440,21 +490,31 @@ var DaysPicker = React.createClass({
       </tr>
     );
   },
-
+  componentWillReceiveProps: function(nextProps) {
+    const { prevLoading, nextLoading } = nextProps;
+    this.setState({
+      prevLoading,
+      nextLoading
+    })
+  },
   render: function() {
-    var viewDate = this.props.viewDate;
     var prefixClass = this.prefixClass;
-    var locale = this.props.locale;
+    var { viewDate, locale, getWidget } = this.props;
 
     return (
       <div
         className={prefixClass('days')}
-        style={this.props.style}>
+        style={this.props.displayed.days}>
         <table className={prefixClass('table')}>
           <thead>
           <tr className={prefixClass('header')}>
             <th className={prefixClass('prev')} onClick={this.props.subtractMonth}>
-              <i className={prefixClass('prev-icon')}></i>
+              {
+                this.state.prevLoading ?
+                  <Icon spin icon="circle-o-notch" />
+                  :
+                  <i className={prefixClass('prev-icon')}></i>
+              }
             </th>
             <th
               className={prefixClass('switch')}
@@ -466,13 +526,18 @@ var DaysPicker = React.createClass({
               </div>
             </th>
             <th className={prefixClass('next')} onClick={this.props.addMonth}>
-              <i className={prefixClass('next-icon')}></i>
+              {
+                this.state.nextLoading ?
+                  <Icon spin icon="circle-o-notch" />
+                  :
+                  <i className={prefixClass('next-icon')}></i>
+              }
             </th>
           </tr>
           {this.renderWeek()}
           </thead>
           <tbody>
-          {this.renderDays()}
+          {this.renderDays(getWidget)}
           </tbody>
         </table>
       </div>
