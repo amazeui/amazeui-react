@@ -1,11 +1,16 @@
 'use strict';
 
-var bind = window.addEventListener ? 'addEventListener' : 'attachEvent';
-var unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent';
-var prefix = bind !== 'addEventListener' ? 'on' : '';
-
+var bind, unbind, prefix;
 
 var events = {
+  _init: function() {
+    if (bind === undefined) {
+      bind = window.addEventListener ? 'addEventListener' : 'attachEvent';
+      unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent';
+      prefix = bind !== 'addEventListener' ? 'on' : '';
+    }
+  },
+
   one: function(node, eventNames, eventListener) {
     var typeArray = eventNames.split(' ');
     var recursiveFunction = function(e) {
@@ -31,6 +36,8 @@ var events = {
    */
 
   on: function(node, eventName, eventListener, capture) {
+    this._init();
+
     node[bind](prefix + eventName, eventListener, capture || false);
 
     return {
@@ -53,6 +60,7 @@ var events = {
    */
 
   off: function(node, eventName, eventListener, capture) {
+    this._init();
     node[unbind](prefix + eventName, eventListener, capture || false);
     return eventListener;
   }
