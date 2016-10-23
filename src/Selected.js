@@ -26,7 +26,7 @@ var Selected = React.createClass({
     btnStyle: React.PropTypes.string,
     btnSize: React.PropTypes.string,
     maxHeight: React.PropTypes.number,
-
+    disabled: React.PropTypes.bool,
     // delimiter to use to join multiple values
     delimiter: React.PropTypes.string
   },
@@ -215,6 +215,7 @@ var Selected = React.createClass({
         contentClassName={this.prefixClass('content')}
         contentTag="div"
         dropup={this.props.dropup}
+        disabled={this.props.disabled}
         ref="dropdown"
       >
         {this.props.searchBox ? (

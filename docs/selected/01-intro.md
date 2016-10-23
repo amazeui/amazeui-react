@@ -14,4 +14,5 @@
 - `btnWidth`: `number` - 设置按钮宽度；
 - `maxHeight`: `number` - 设置下拉的选项的最大高度；
 - `searchBox`:  `bool` - 是否显示过滤搜索框；
+- `disabled`: `bool` - 禁用下拉菜单;
 - `delimiter`:  `string` - 多选时合并各个值的分隔符，默认为 `,`。

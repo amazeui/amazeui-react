@@ -4,7 +4,8 @@
 
 - `title`: `node` - 下拉按钮文字；
 - `navItem`: `bool` - 是否为 Nav 子条目；
-- `btnStyle`: `string` - 按钮样式风格。
+- `btnStyle`: `string` - 按钮样式风格;
+- `disabled`: `bool` - 禁用下拉菜单。
 
 **子组件：**
 
