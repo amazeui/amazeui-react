@@ -29,6 +29,7 @@ var Dropdown = React.createClass({
     toggleClassName: React.PropTypes.string,
     caretClassName: React.PropTypes.string,
     contentClassName: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
     onOpen: React.PropTypes.func, // open callback
     onClose: React.PropTypes.func // close callback
   },
@@ -167,6 +168,7 @@ var Dropdown = React.createClass({
             this.props.toggleClassName)}
           classPrefix={btnClassPrefix}
           component={btnComponent}
+          disabled={this.props.disabled}
           ref="dropdownToggle"
         >
           {this.props.title}

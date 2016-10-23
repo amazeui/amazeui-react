@@ -1,4 +1,4 @@
-/*! Amaze UI React v1.2.3 | by Amaze UI Team | (c) 2016 AllMobilize, Inc. | Licensed under MIT | 2016-10-19T23:22:15+0800 */
+/*! Amaze UI React v1.2.3 | by Amaze UI Team | (c) 2016 AllMobilize, Inc. | Licensed under MIT | 2016-10-23T19:06:48+0800 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"), require("react-dom"));
@@ -4288,6 +4288,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      showPicker: false
 	    };
 	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    if (this.props.dateTime !== nextProps.dateTime) {
+	      this.setState({
+	        value: nextProps.dateTime || fecha.format(new Date(), this.props.format)
+	      });
+	    }
+	  },
 
 	  handleOuterClick: function handleOuterClick(event) {
 	    var picker = ReactDOM.findDOMNode(this.refs.DateTimePicker);
@@ -6266,6 +6273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    toggleClassName: React.PropTypes.string,
 	    caretClassName: React.PropTypes.string,
 	    contentClassName: React.PropTypes.string,
+	    disabled: React.PropTypes.bool,
 	    onOpen: React.PropTypes.func, // open callback
 	    onClose: React.PropTypes.func // close callback
 	  },
@@ -6396,6 +6404,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          className: classNames(this.prefixClass('toggle'), this.props.toggleClassName),
 	          classPrefix: btnClassPrefix,
 	          component: btnComponent,
+	          disabled: this.props.disabled,
 	          ref: 'dropdownToggle'
 	        },
 	        this.props.title,
@@ -8160,7 +8169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    btnStyle: React.PropTypes.string,
 	    btnSize: React.PropTypes.string,
 	    maxHeight: React.PropTypes.number,
-
+	    disabled: React.PropTypes.bool,
 	    // delimiter to use to join multiple values
 	    delimiter: React.PropTypes.string
 	  },
@@ -8350,6 +8359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        contentClassName: this.prefixClass('content'),
 	        contentTag: 'div',
 	        dropup: this.props.dropup,
+	        disabled: this.props.disabled,
 	        ref: 'dropdown'
 	      },
 	      this.props.searchBox ? React.createElement(
