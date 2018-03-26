@@ -1,18 +1,22 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Article = React.createClass({
+var Article = createReactClass({
+  displayName: 'Article',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string,
-    title: React.PropTypes.node,
-    meta: React.PropTypes.node,
-    lead: React.PropTypes.node
+    classPrefix: PropTypes.string,
+    title: PropTypes.node,
+    meta: PropTypes.node,
+    lead: PropTypes.node
   },
 
   getDefaultProps: function() {
@@ -53,14 +57,14 @@ var Article = React.createClass({
         </div>
       </article>
     );
-  }
+  },
 });
 
-Article.Child = React.createClass({
+Article.Child = createReactClass({
   mixins: [ClassNameMixin],
 
   propTypes: {
-    role: React.PropTypes.string.isRequired
+    role: PropTypes.string.isRequired
   },
 
   getDefaultProps: function() {

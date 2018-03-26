@@ -1,5 +1,7 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -11,7 +13,7 @@ var ReactDOM = require('react-dom');
 
 module.exports = {
   propTypes: {
-    container: React.PropTypes.node
+    container: PropTypes.node
   },
 
   componentDidMount: function() {

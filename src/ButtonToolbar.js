@@ -1,15 +1,19 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var ButtonToolbar = React.createClass({
+var ButtonToolbar = createReactClass({
+  displayName: 'ButtonToolbar',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired
+    classPrefix: PropTypes.string.isRequired
   },
 
   getDefaultProps: function() {
@@ -30,7 +34,7 @@ var ButtonToolbar = React.createClass({
         {this.props.children}
       </div>
     );
-  }
+  },
 });
 
 module.exports = ButtonToolbar;

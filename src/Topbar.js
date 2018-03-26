@@ -1,6 +1,9 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var assign = require('object-assign');
 var omit = require('object.omit');
@@ -9,26 +12,27 @@ var createChainedFunction = require('./utils/createChainedFunction');
 var Icon = require('./Icon');
 var Button = require('./Button');
 
-var Topbar = React.createClass({
+var Topbar = createReactClass({
+  displayName: 'Topbar',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string,
-    component: React.PropTypes.node,
-    brand: React.PropTypes.node,
-    brandLink: React.PropTypes.string,
-    inverse: React.PropTypes.bool,
-    fixedTop: React.PropTypes.bool,
-    fixedBottom: React.PropTypes.bool,
-    toggleBtn: React.PropTypes.node,
-    toggleNavKey: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.number
+    classPrefix: PropTypes.string,
+    component: PropTypes.node,
+    brand: PropTypes.node,
+    brandLink: PropTypes.string,
+    inverse: PropTypes.bool,
+    fixedTop: PropTypes.bool,
+    fixedBottom: PropTypes.bool,
+    toggleBtn: PropTypes.node,
+    toggleNavKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
     ]),
-    onToggle: React.PropTypes.func,
-    navExpanded: React.PropTypes.bool,
-    defaultNavExpanded: React.PropTypes.bool,
-    fluid: React.PropTypes.bool
+    onToggle: PropTypes.func,
+    navExpanded: PropTypes.bool,
+    defaultNavExpanded: PropTypes.bool,
+    fluid: PropTypes.bool
   },
 
   getDefaultProps: function() {
@@ -157,7 +161,7 @@ var Topbar = React.createClass({
         </div>
       </Component>
     );
-  }
+  },
 });
 
 module.exports = Topbar;

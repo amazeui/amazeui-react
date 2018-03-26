@@ -1,5 +1,7 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
@@ -9,7 +11,7 @@ var CSSCore = require('../utils/CSSCore');
 
 module.exports = {
   propTypes: {
-    container: React.PropTypes.node
+    container: PropTypes.node
   },
 
   _getContainer: function() {

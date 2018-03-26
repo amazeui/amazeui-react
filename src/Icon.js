@@ -1,12 +1,14 @@
 'use strict';
 
+var PropTypes = require('prop-types');
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
-var PropTypes = React.PropTypes;
 
-var Icon = React.createClass({
+var Icon = createReactClass({
+  displayName: 'Icon',
   mixins: [ClassNameMixin],
 
   propTypes: {
@@ -62,7 +64,7 @@ var Icon = React.createClass({
         {this.props.children}
       </Component>
     );
-  }
+  },
 });
 
 module.exports = Icon;

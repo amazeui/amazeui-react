@@ -1,17 +1,21 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Code = React.createClass({
+var Code = createReactClass({
+  displayName: 'Code',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    language: React.PropTypes.string,
-    escape: React.PropTypes.bool,
-    highlight: React.PropTypes.func
+    language: PropTypes.string,
+    escape: PropTypes.bool,
+    highlight: PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -46,7 +50,7 @@ var Code = React.createClass({
         {children}
       </pre>
     );
-  }
+  },
 });
 
 module.exports = Code;

@@ -1,20 +1,24 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Nav = React.createClass({
+var Nav = createReactClass({
+  displayName: 'Nav',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string,
-    justify: React.PropTypes.bool,
-    pills: React.PropTypes.bool,
-    tabs: React.PropTypes.bool,
-    topbar: React.PropTypes.bool,
-    component: React.PropTypes.node.isRequired
+    classPrefix: PropTypes.string,
+    justify: PropTypes.bool,
+    pills: PropTypes.bool,
+    tabs: PropTypes.bool,
+    topbar: PropTypes.bool,
+    component: PropTypes.node.isRequired
   },
 
   getDefaultProps: function() {
@@ -56,7 +60,7 @@ var Nav = React.createClass({
         {this.props.children}
       </Component>
     );
-  }
+  },
 });
 
 module.exports = Nav;

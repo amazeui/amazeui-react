@@ -1,11 +1,14 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 /**
  * Inputs Components
  * @desc includes input, input-group
  */
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 var omit = require('object.omit');
@@ -15,32 +18,33 @@ var Button = require('./Button');
 var Icon = require('./Icon');
 var constants = require('./constants');
 
-var Input = React.createClass({
+var Input = createReactClass({
+  displayName: 'Input',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    type: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    radius: React.PropTypes.bool,
-    round: React.PropTypes.bool,
-    amSize: React.PropTypes.oneOf(['sm', 'lg']),
-    amStyle: React.PropTypes.string,
-    validation: React.PropTypes.oneOf(['success', 'warning', 'error']),
-    label: React.PropTypes.node,
-    help: React.PropTypes.node,
-    addonBefore: React.PropTypes.node,
-    addonAfter: React.PropTypes.node,
-    btnBefore: React.PropTypes.node,
-    btnAfter: React.PropTypes.node,
-    id: React.PropTypes.string,
-    groupClassName: React.PropTypes.string,
-    wrapperClassName: React.PropTypes.string,
-    labelClassName: React.PropTypes.string,
-    helpClassName: React.PropTypes.string,
-    icon: React.PropTypes.string,
-    standalone: React.PropTypes.bool,
-    inline: React.PropTypes.bool,
-    hasFeedback: React.PropTypes.bool
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    radius: PropTypes.bool,
+    round: PropTypes.bool,
+    amSize: PropTypes.oneOf(['sm', 'lg']),
+    amStyle: PropTypes.string,
+    validation: PropTypes.oneOf(['success', 'warning', 'error']),
+    label: PropTypes.node,
+    help: PropTypes.node,
+    addonBefore: PropTypes.node,
+    addonAfter: PropTypes.node,
+    btnBefore: PropTypes.node,
+    btnAfter: PropTypes.node,
+    id: PropTypes.string,
+    groupClassName: PropTypes.string,
+    wrapperClassName: PropTypes.string,
+    labelClassName: PropTypes.string,
+    helpClassName: PropTypes.string,
+    icon: PropTypes.string,
+    standalone: PropTypes.bool,
+    inline: PropTypes.bool,
+    hasFeedback: PropTypes.bool
 },
 
   getDefaultProps: function() {
@@ -344,7 +348,7 @@ var Input = React.createClass({
         ]}
       </FormGroup>
     );
-  }
+  },
 });
 
 module.exports = Input;

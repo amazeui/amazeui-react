@@ -1,16 +1,20 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Container = React.createClass({
+var Container = createReactClass({
+  displayName: 'Container',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired,
-    component: React.PropTypes.node.isRequired
+    classPrefix: PropTypes.string.isRequired,
+    component: PropTypes.node.isRequired
   },
 
   getDefaultProps: function() {
@@ -33,7 +37,7 @@ var Container = React.createClass({
         {this.props.children}
       </Component>
     );
-  }
+  },
 });
 
 module.exports = Container;

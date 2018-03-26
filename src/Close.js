@@ -1,21 +1,25 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 var Icon = require('./Icon');
 
-var Close = React.createClass({
+var Close = createReactClass({
+  displayName: 'Close',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired,
-    component: React.PropTypes.node,
-    spin: React.PropTypes.bool,
-    alt: React.PropTypes.bool,
-    icon: React.PropTypes.bool,
-    type: React.PropTypes.string
+    classPrefix: PropTypes.string.isRequired,
+    component: PropTypes.node,
+    spin: PropTypes.bool,
+    alt: PropTypes.bool,
+    icon: PropTypes.bool,
+    type: PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -49,7 +53,7 @@ var Close = React.createClass({
         {this.props.icon ? <Icon icon="times" /> : '\u00D7'}
       </Component>
     );
-  }
+  },
 });
 
 module.exports = Close;

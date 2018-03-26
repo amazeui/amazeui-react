@@ -1,26 +1,30 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 var omit = require('object.omit');
 
-var Button = React.createClass({
+var Button = createReactClass({
+  displayName: 'Button',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired,
-    active: React.PropTypes.bool,
-    block: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    radius: React.PropTypes.bool,
-    round: React.PropTypes.bool,
-    component: React.PropTypes.node,
-    href: React.PropTypes.string,
-    target: React.PropTypes.string,
-    type: React.PropTypes.string,
-    amSize: React.PropTypes.string,
-    amStyle: React.PropTypes.string
+    classPrefix: PropTypes.string.isRequired,
+    active: PropTypes.bool,
+    block: PropTypes.bool,
+    disabled: PropTypes.bool,
+    radius: PropTypes.bool,
+    round: PropTypes.bool,
+    component: PropTypes.node,
+    href: PropTypes.string,
+    target: PropTypes.string,
+    type: PropTypes.string,
+    amSize: PropTypes.string,
+    amStyle: PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -85,7 +89,7 @@ var Button = React.createClass({
     classSet[this.prefixClass('block')] = this.props.block;
 
     return this[renderType](classSet);
-  }
+  },
 });
 
 module.exports = Button;

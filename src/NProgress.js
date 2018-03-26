@@ -1,11 +1,14 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 /**
  * React version of NProgress
  * https://github.com/rstacruz/nprogress/
  */
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
@@ -25,17 +28,18 @@ function toBarPercentage(n) {
   return (-1 + n) * 100;
 }
 
-var NProgress = React.createClass({
+var NProgress = createReactClass({
+  displayName: 'NProgress',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    minimum: React.PropTypes.number,
-    easing: React.PropTypes.string,
-    speed: React.PropTypes.number,
-    spinner: React.PropTypes.bool,
-    trickle: React.PropTypes.bool,
-    trickleRate: React.PropTypes.number,
-    trickleSpeed: React.PropTypes.number
+    minimum: PropTypes.number,
+    easing: PropTypes.string,
+    speed: PropTypes.number,
+    spinner: PropTypes.bool,
+    trickle: PropTypes.bool,
+    trickleRate: PropTypes.number,
+    trickleSpeed: PropTypes.number
   },
 
   getInitialState: function() {
@@ -159,7 +163,7 @@ var NProgress = React.createClass({
         {spinner}
       </div>
     ) : null;
-  }
+  },
 });
 
 module.exports = NProgress;

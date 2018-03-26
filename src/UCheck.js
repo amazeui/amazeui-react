@@ -1,10 +1,13 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 /**
  * Custom radio/checkbox style
  */
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
@@ -12,16 +15,17 @@ var Input = require('./Input');
 var Icon = require('./Icon');
 var constants = require('./constants');
 
-var UCheck = React.createClass({
+var UCheck = createReactClass({
+  displayName: 'UCheck',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    type: React.PropTypes.oneOf(['radio', 'checkbox']),
-    disabled: React.PropTypes.bool,
-    amStyle: React.PropTypes.oneOf(['secondary', 'success', 'warning',
+    type: PropTypes.oneOf(['radio', 'checkbox']),
+    disabled: PropTypes.bool,
+    amStyle: PropTypes.oneOf(['secondary', 'success', 'warning',
       'danger']),
-    inline: React.PropTypes.bool,
-    hasFeedback: React.PropTypes.bool
+    inline: PropTypes.bool,
+    hasFeedback: PropTypes.bool
   },
 
   getDefaultProps: function() {
@@ -59,7 +63,7 @@ var UCheck = React.createClass({
         {this.props.label}
       </label>
     );
-  }
+  },
 });
 
 module.exports = UCheck;

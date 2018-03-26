@@ -1,6 +1,9 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var cloneElement = React.cloneElement;
 var OverlayMixin = require('./mixins/OverlayMixin');
@@ -15,22 +18,23 @@ function isOneOf(one, of) {
   return one === of;
 }
 
-var PopoverTrigger = React.createClass({
+var PopoverTrigger = createReactClass({
+  displayName: 'PopoverTrigger',
   mixins: [OverlayMixin],
 
   propTypes: {
-    trigger: React.PropTypes.oneOfType([
-      React.PropTypes.oneOf(['click', 'hover', 'focus']),
-      React.PropTypes.arrayOf(
-        React.PropTypes.oneOf(['click', 'hover', 'focus'])
+    trigger: PropTypes.oneOfType([
+      PropTypes.oneOf(['click', 'hover', 'focus']),
+      PropTypes.arrayOf(
+        PropTypes.oneOf(['click', 'hover', 'focus'])
       )
     ]),
-    placement: React.PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
-    delay: React.PropTypes.number,
-    delayOpen: React.PropTypes.number,
-    delayClose: React.PropTypes.number,
-    defaultPopoverActive: React.PropTypes.bool,
-    popover: React.PropTypes.node.isRequired
+    placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+    delay: PropTypes.number,
+    delayOpen: PropTypes.number,
+    delayClose: PropTypes.number,
+    defaultPopoverActive: PropTypes.bool,
+    popover: PropTypes.node.isRequired
   },
 
   getDefaultProps: function() {
@@ -227,7 +231,7 @@ var PopoverTrigger = React.createClass({
     }
 
     return cloneElement(child, props);
-  }
+  },
 });
 
 module.exports = PopoverTrigger;

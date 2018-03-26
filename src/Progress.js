@@ -1,21 +1,25 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Progress = React.createClass({
+var Progress = createReactClass({
+  displayName: 'Progress',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string,
-    now: React.PropTypes.number,
-    label: React.PropTypes.string,
-    active: React.PropTypes.bool,
-    striped: React.PropTypes.bool,
-    amSize: React.PropTypes.string,
-    amStyle: React.PropTypes.string
+    classPrefix: PropTypes.string,
+    now: PropTypes.number,
+    label: PropTypes.string,
+    active: PropTypes.bool,
+    striped: PropTypes.bool,
+    amSize: PropTypes.string,
+    amStyle: PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -93,7 +97,7 @@ var Progress = React.createClass({
         </div>
       );
     }
-  }
+  },
 });
 
 module.exports = Progress;

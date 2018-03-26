@@ -1,17 +1,21 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Form = React.createClass({
+var Form = createReactClass({
+  displayName: 'Form',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired,
-    horizontal: React.PropTypes.bool,
-    inline: React.PropTypes.bool
+    classPrefix: PropTypes.string.isRequired,
+    horizontal: PropTypes.bool,
+    inline: PropTypes.bool
   },
 
   getDefaultProps: function() {
@@ -41,7 +45,7 @@ var Form = React.createClass({
         {this.props.children}
       </form>
     );
-  }
+  },
 });
 
 module.exports = Form;

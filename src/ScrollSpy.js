@@ -1,6 +1,9 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var cloneElement = React.cloneElement;
 var assign = require('object-assign');
@@ -14,15 +17,16 @@ var debounce = require('./utils/debounce');
 var canUseDOM = require('./utils/canUseDOM');
 var domUtils = require('./utils/domUtils');
 
-var ScrollSpy = React.createClass({
+var ScrollSpy = createReactClass({
+  displayName: 'ScrollSpy',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    animation: React.PropTypes.string,
-    delay: React.PropTypes.number,
-    repeat: React.PropTypes.bool,
+    animation: PropTypes.string,
+    delay: PropTypes.number,
+    repeat: PropTypes.bool,
     // container which has scrollbar
-    container: React.PropTypes.any
+    container: PropTypes.any
   },
 
   getDefaultProps: function() {
@@ -108,7 +112,7 @@ var ScrollSpy = React.createClass({
       className: classNames(child.props.className, animation),
       'data-am-scrollspy': 'animation' // style helper
     }));
-  }
+  },
 });
 
 module.exports = ScrollSpy;

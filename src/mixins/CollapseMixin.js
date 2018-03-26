@@ -5,13 +5,15 @@
 
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
 var TransitionEvents = require('../utils/TransitionEvents');
 
 var CollapseMixin = {
   propTypes: {
-    defaultExpanded: React.PropTypes.bool,
-    expanded: React.PropTypes.bool
+    defaultExpanded: PropTypes.bool,
+    expanded: PropTypes.bool
   },
 
   getInitialState: function() {

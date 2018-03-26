@@ -1,21 +1,25 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var cloneElement = React.cloneElement;
 var OverlayMixin = require('./mixins/OverlayMixin');
 var DimmerMixin = require('./mixins/DimmerMixin');
 var createChainedFunction = require('./utils/createChainedFunction');
 
-var ModalTrigger = React.createClass({
+var ModalTrigger = createReactClass({
+  displayName: 'ModalTrigger',
   mixins: [OverlayMixin, DimmerMixin],
 
   propTypes: {
-    modal: React.PropTypes.node.isRequired,
-    onConfirm: React.PropTypes.func,
-    onCancel: React.PropTypes.func,
-    title: React.PropTypes.string,
-    show: React.PropTypes.bool,
-    onClose: React.PropTypes.func
+    modal: PropTypes.node.isRequired,
+    onConfirm: PropTypes.func,
+    onCancel: PropTypes.func,
+    title: PropTypes.string,
+    show: PropTypes.bool,
+    onClose: PropTypes.func
   },
 
   getInitialState: function() {
@@ -138,7 +142,7 @@ var ModalTrigger = React.createClass({
       this.props.onBlur);
 
     return cloneElement(child, props);
-  }
+  },
 });
 
 module.exports = ModalTrigger;

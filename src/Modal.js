@@ -1,6 +1,9 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 var omit = require('object.omit');
@@ -10,25 +13,26 @@ var Events = require('./utils/Events');
 var Close = require('./Close');
 var Icon = require('./Icon');
 
-var Modal = React.createClass({
+var Modal = createReactClass({
+  displayName: 'Modal',
   mixins: [ClassNameMixin, DimmerMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired,
-    type: React.PropTypes.oneOf(['alert', 'confirm', 'prompt', 'loading',
+    classPrefix: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['alert', 'confirm', 'prompt', 'loading',
       'actions', 'popup']),
-    title: React.PropTypes.node,
-    confirmText: React.PropTypes.string,
-    cancelText: React.PropTypes.string,
-    closeIcon: React.PropTypes.bool,
-    closeViaDimmer: React.PropTypes.bool,
-    onRequestClose: React.PropTypes.func,
-    marginTop: React.PropTypes.string,
-    marginLeft: React.PropTypes.string,
-    modalWidth: React.PropTypes.string,
-    modalHeight: React.PropTypes.string,
-    onConfirm: React.PropTypes.func,
-    onCancel: React.PropTypes.func
+    title: PropTypes.node,
+    confirmText: PropTypes.string,
+    cancelText: PropTypes.string,
+    closeIcon: PropTypes.bool,
+    closeViaDimmer: PropTypes.bool,
+    onRequestClose: PropTypes.func,
+    marginTop: PropTypes.string,
+    marginLeft: PropTypes.string,
+    modalWidth: PropTypes.string,
+    modalHeight: PropTypes.string,
+    onConfirm: PropTypes.func,
+    onCancel: PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -275,7 +279,7 @@ var Modal = React.createClass({
     );
 
     return this.renderDimmer(modal);
-  }
+  },
 });
 
 module.exports = Modal;

@@ -1,26 +1,30 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 /*
 * https://github.com/react-bootstrap/react-bootstrap/blob/master/src/CollapsibleNav.js
 * */
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 var CollapseMixin = require('./mixins/CollapseMixin');
 var createChainedFunction = require('./utils/createChainedFunction');
 
-var CollapsibleNav = React.createClass({
+var CollapsibleNav = createReactClass({
+  displayName: 'CollapsibleNav',
   mixins: [ClassNameMixin, CollapseMixin],
 
   propTypes: {
-    collapsible: React.PropTypes.bool,
-    onSelect: React.PropTypes.func,
-    activeHref: React.PropTypes.string,
-    activeKey: React.PropTypes.any,
-    expanded: React.PropTypes.bool,
-    eventKey: React.PropTypes.any
+    collapsible: PropTypes.bool,
+    onSelect: PropTypes.func,
+    activeHref: PropTypes.string,
+    activeKey: PropTypes.any,
+    expanded: PropTypes.bool,
+    eventKey: PropTypes.any
   },
 
   handleToggle: function() {
@@ -118,7 +122,7 @@ var CollapsibleNav = React.createClass({
           this.renderChildren)}
       </div>
     );
-  }
+  },
 });
 
 module.exports = CollapsibleNav;

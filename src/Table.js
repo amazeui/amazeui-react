@@ -1,21 +1,25 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Table = React.createClass({
+var Table = createReactClass({
+  displayName: 'Table',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired,
-    bordered: React.PropTypes.bool,
-    compact: React.PropTypes.bool,
-    hover: React.PropTypes.bool,
-    striped: React.PropTypes.bool,
-    radius: React.PropTypes.bool,
-    responsive: React.PropTypes.bool
+    classPrefix: PropTypes.string.isRequired,
+    bordered: PropTypes.bool,
+    compact: PropTypes.bool,
+    hover: PropTypes.bool,
+    striped: PropTypes.bool,
+    radius: PropTypes.bool,
+    responsive: PropTypes.bool
   },
 
   getDefaultProps: function() {
@@ -52,7 +56,7 @@ var Table = React.createClass({
         {table}
       </div>
     ) : table;
-  }
+  },
 });
 
 module.exports = Table;

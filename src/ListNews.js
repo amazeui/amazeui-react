@@ -1,24 +1,28 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 var Button = require('./Button');
 var Col = require('./Col');
 
-var ListNews = React.createClass({
+var ListNews = createReactClass({
+  displayName: 'ListNews',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string,
-    theme: React.PropTypes.oneOf(['default']),
-    data: React.PropTypes.object,
-    header: React.PropTypes.node,
-    footer: React.PropTypes.node,
-    morePosition: React.PropTypes.oneOf(['top', 'bottom']),
-    moreText: React.PropTypes.string,
-    thumbPosition: React.PropTypes.oneOf(['top', 'left', 'right', 'bottom-left',
+    classPrefix: PropTypes.string,
+    theme: PropTypes.oneOf(['default']),
+    data: PropTypes.object,
+    header: PropTypes.node,
+    footer: PropTypes.node,
+    morePosition: PropTypes.oneOf(['top', 'bottom']),
+    moreText: PropTypes.string,
+    thumbPosition: PropTypes.oneOf(['top', 'left', 'right', 'bottom-left',
       'bottom-right'])
   },
 
@@ -223,7 +227,7 @@ var ListNews = React.createClass({
         {this.props.footer || this.renderFooter()}
       </div>
     );
-  }
+  },
 });
 
 module.exports = ListNews;

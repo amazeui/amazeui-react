@@ -1,22 +1,26 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 var AvgGrid = require('./AvgGrid');
 var omit = require('object.omit');
 
-var Gallery = React.createClass({
+var Gallery = createReactClass({
+  displayName: 'Gallery',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string,
-    theme: React.PropTypes.oneOf(['default', 'overlay', 'bordered',
+    classPrefix: PropTypes.string,
+    theme: PropTypes.oneOf(['default', 'overlay', 'bordered',
       'imgbordered']),
-    data: React.PropTypes.array,
-    sm: React.PropTypes.number,
-    md: React.PropTypes.number,
-    lg: React.PropTypes.number
+    data: PropTypes.array,
+    sm: PropTypes.number,
+    md: PropTypes.number,
+    lg: PropTypes.number
   },
 
   getDefaultProps: function() {
@@ -89,7 +93,7 @@ var Gallery = React.createClass({
         }.bind(this))}
       </AvgGrid>
     );
-  }
+  },
 });
 
 module.exports = Gallery;

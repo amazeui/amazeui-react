@@ -1,6 +1,9 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
@@ -8,27 +11,28 @@ var Dropdown = require('./Dropdown');
 var Icon = require('./Icon');
 var Input = require('./Input');
 
-var Selected = React.createClass({
+var Selected = createReactClass({
+  displayName: 'Selected',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string,
-    data: React.PropTypes.array.isRequired,
-    placeholder: React.PropTypes.string,
-    value: React.PropTypes.string,
-    multiple: React.PropTypes.bool,
-    searchBox: React.PropTypes.bool,
-    name: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    optionFilter: React.PropTypes.func,
-    dropup: React.PropTypes.bool,
-    btnWidth: React.PropTypes.number,
-    btnStyle: React.PropTypes.string,
-    btnSize: React.PropTypes.string,
-    maxHeight: React.PropTypes.number,
+    classPrefix: PropTypes.string,
+    data: PropTypes.array.isRequired,
+    placeholder: PropTypes.string,
+    value: PropTypes.string,
+    multiple: PropTypes.bool,
+    searchBox: PropTypes.bool,
+    name: PropTypes.string,
+    onChange: PropTypes.func,
+    optionFilter: PropTypes.func,
+    dropup: PropTypes.bool,
+    btnWidth: PropTypes.number,
+    btnStyle: PropTypes.string,
+    btnSize: PropTypes.string,
+    maxHeight: PropTypes.number,
 
     // delimiter to use to join multiple values
-    delimiter: React.PropTypes.string
+    delimiter: PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -240,7 +244,7 @@ var Selected = React.createClass({
         />
       </Dropdown>
     );
-  }
+  },
 });
 
 module.exports = Selected;

@@ -1,21 +1,25 @@
 'use strict';
 
+var PropTypes = require('prop-types');
+
 var React = require('react');
+var createReactClass = require('create-react-class');
 var classNames = require('classnames');
 var omit = require('object.omit');
 var ClassNameMixin = require('./mixins/ClassNameMixin');
 
-var Popover = React.createClass({
+var Popover = createReactClass({
+  displayName: 'Popover',
   mixins: [ClassNameMixin],
 
   propTypes: {
-    classPrefix: React.PropTypes.string.isRequired,
-    placement: React.PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
-    positionLeft: React.PropTypes.number,
-    positionTop: React.PropTypes.number,
-    amSize: React.PropTypes.oneOf(['sm', 'lg']),
-    amStyle: React.PropTypes.string,
-    onRequestHide: React.PropTypes.func
+    classPrefix: PropTypes.string.isRequired,
+    placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+    positionLeft: PropTypes.number,
+    positionTop: PropTypes.number,
+    amSize: PropTypes.oneOf(['sm', 'lg']),
+    amStyle: PropTypes.string,
+    onRequestHide: PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -48,7 +52,7 @@ var Popover = React.createClass({
         <div className={this.prefixClass('caret')}></div>
       </div>
     );
-  }
+  },
 });
 
 module.exports = Popover;
