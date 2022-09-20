@@ -36,7 +36,9 @@ var dateUtils = {
   getLocale: function(locale) {
     if (!locale && navigator && navigator.language) {
       locale = navigator.language.split('-');
-      locale[1] = locale[1].toUpperCase();
+      if (locale.length > 1) {
+        locale[1] = locale[1].toUpperCase();
+      }
       locale = locale.join('_');
     }
 
